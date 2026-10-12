@@ -43,3 +43,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Dependencias de Node.js
+node_modules/
+functions/node_modules/
+
+# Archivos locales de prueba
+crear_producto_prueba.cjs
+functions/crear_producto_prueba.cjs
