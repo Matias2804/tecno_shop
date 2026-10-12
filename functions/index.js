@@ -15,6 +15,64 @@ setGlobalOptions({
 
 const db = getFirestore();
 
+const nodemailer = require("nodemailer");
+
+const smtpUser = process.env.SMTP_USER;
+const smtpPassword = process.env.SMTP_APP_PASSWORD;
+
+const transporter =
+  smtpUser && smtpPassword
+    ? nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: smtpUser,
+          pass: smtpPassword,
+        },
+      })
+    : null;
+
+
+async function enviarCorreoCompra(correo, compraId, productos, total) {
+  if (!transporter) {
+    throw new Error("El servicio SMTP no está configurado.");
+  }
+
+  const formatoCLP = (valor) =>
+    new Intl.NumberFormat("es-CL", {
+      style: "currency",
+      currency: "CLP",
+      maximumFractionDigits: 0,
+    }).format(valor);
+
+  const detalle = productos
+    .map(
+      (producto) =>
+        `- ${producto.nombre}: ${producto.cantidad} unidad(es) x ` +
+        `${formatoCLP(producto.precio)} = ${formatoCLP(producto.subtotal)}`
+    )
+    .join("\n");
+
+  await transporter.sendMail({
+    from: `"TecnoShop" <${smtpUser}>`,
+    to: correo,
+    subject: `Confirmación de compra ${compraId} - TecnoShop`,
+    text: [
+      "¡Gracias por comprar en TecnoShop!",
+      "",
+      `Número de compra: ${compraId}`,
+      "",
+      "Detalle de tu pedido:",
+      detalle,
+      "",
+      `Total pagado: ${formatoCLP(total)}`,
+      "",
+      "Tu compra ha sido registrada correctamente.",
+      "Gracias por preferir TecnoShop.",
+    ].join("\n"),
+  });
+}
+
+
 exports.realizarCompra = onCall(async (request) => {
   // 1. Verificar que el usuario haya iniciado sesión.
   if (!request.auth) {
@@ -173,11 +231,40 @@ exports.realizarCompra = onCall(async (request) => {
     return { total };
   });
 
+
+  const correo = request.auth.token.email;
+
+  let correoEnviado = false;
+
+  if (correo) {
+    try {
+      await enviarCorreoCompra(
+        correo,
+        referenciaCompra.id,
+        // Las líneas de detalle se guardaron en la compra.
+        (await referenciaCompra.get()).data().productos,
+        resultado.total
+      );
+
+      correoEnviado = true;
+    } catch (error) {
+      console.error("No se pudo enviar el correo de compra:", error.message);
+    }
+  } else {
+    console.warn(
+      "Compra confirmada, pero el usuario no tiene correo en su token."
+    );
+  }
+
   return {
     compraId: referenciaCompra.id,
     total: resultado.total,
-    mensaje: "Compra realizada correctamente.",
+    correoEnviado,
+    mensaje: correoEnviado
+      ? "Compra realizada correctamente. Se envió el correo de confirmación."
+      : "Compra realizada correctamente, pero no se pudo enviar el correo.",
   };
+
 });
 exports.administrarProductos =
   require("./productos").administrarProductos;

@@ -55,3 +55,6 @@ ui-debug.log
 
 # Configuración local de Firebase Functions
 functions/.env.*
+
+# Datos locales exportados de Firebase Emulator
+/emulator-data/
