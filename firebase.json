@@ -1,0 +1,50 @@
+﻿{
+    "flutter":  {
+                    "platforms":  {
+                                      "android":  {
+                                                      "default":  {
+                                                                      "projectId":  "tecnoshop-9c08d",
+                                                                      "appId":  "1:374966673937:android:23a6987644b6e93c9dc7b0",
+                                                                      "fileOutput":  "android/app/google-services.json"
+                                                                  }
+                                                  },
+                                      "dart":  {
+                                                   "lib/firebase_options.dart":  {
+                                                                                     "projectId":  "tecnoshop-9c08d",
+                                                                                     "configurations":  {
+                                                                                                            "android":  "1:374966673937:android:23a6987644b6e93c9dc7b0",
+                                                                                                            "ios":  "1:374966673937:ios:7f7d57d2649c6f2f9d0b",
+                                                                                                            "macos":  "1:374966673937:ios:7f7d57d2649c6f2f9d0b",
+                                                                                                            "web":  "1:374966673937:web:8ff2d267db790ebd9dc7b0",
+                                                                                                            "windows":  "1:374966673937:web:f59c71b41286e0c29dc7b0"
+                                                                                                        }
+                                                                                 }
+                                               }
+                                  }
+                },
+    "functions":  [
+                      {
+                          "source":  "functions",
+                          "codebase":  "default"
+                      }
+                  ],
+    "emulators":  {
+                      "auth":  {
+                                   "port":  9099
+                               },
+                      "functions":  {
+                                        "port":  5001
+                                    },
+                      "firestore":  {
+                                        "port":  8080
+                                    },
+                      "ui":  {
+                                 "enabled":  true,
+                                 "port":  4000
+                             },
+                      "singleProjectMode":  true
+                  },
+    "firestore":  {
+                      "rules":  "firestore.rules"
+                  }
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "374966673937",
+    "project_id": "tecnoshop-9c08d",
+    "storage_bucket": "tecnoshop-9c08d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374966673937:android:23a6987644b6e93c9dc7b0",
+        "android_client_info": {
+          "package_name": "com.example.tecno_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNtIRKMhoaMYnZ7aYJ6TsGIrV5u0YOy5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
