@@ -52,3 +52,6 @@ functions/crear_producto_prueba.cjs
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+
+# Configuración local de Firebase Functions
+functions/.env.*

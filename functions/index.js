@@ -179,3 +179,5 @@ exports.realizarCompra = onCall(async (request) => {
     mensaje: "Compra realizada correctamente.",
   };
 });
+exports.administrarProductos =
+  require("./productos").administrarProductos;
