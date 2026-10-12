@@ -122,11 +122,6 @@ exports.administrarProductos = onRequest(async (req, res) => {
     }
 
     if (req.method === "PUT") {
-      console.log("PUT recibido:", {
-  path: req.path,
-  originalUrl: req.originalUrl,
-  idExtraido: req.path.split("/").filter(Boolean).pop(),
-});
       const id = req.path.split("/").filter(Boolean).pop();
 
       if (!id || id === "productos") {
@@ -148,8 +143,6 @@ exports.administrarProductos = onRequest(async (req, res) => {
       }
 
       const referencia = productos.doc(id);
-      console.log("ID buscado en Firestore:", id);
-      console.log("Ruta del documento:", referencia.path);
       const existente = await referencia.get();
 
       if (!existente.exists) {
